@@ -17,28 +17,40 @@
 
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="card-body">
-                    <form action="" method="Post">
+
+                    <form action="{{ route('student.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="from-group mb-3">
-                            <label for="">Student Name</label>
-                            <input class="from-control" type="text" name='name'/>
+                            <label class="w-25" for="">Student Name</label>
+                            <input class="from-control w-50" type="text" name='name'/>
                         </div>
                         <div class="from-group mb-3">
-                            <label for="">Email</label>
-                            <input class="from-control" type="email" name='email'/>
+                            <label class="w-25" for="">Email</label>
+                            <input class="from-control w-50" type="email" name='email'/>
                         </div>
 
                         <div class="from-group mb-3">
-                            <label for="">Course</label>
-                            <input class="from-control" type="text" name='course'/>
+                            <label class="w-25" for="">Course</label>
+                            <input class="from-control w-50" type="text" name='course'/>
                         </div>
 
                         <div class="from-group mb-3">
-                            <label for="">Section</label>
-                            <input class="from-control" type="text" name='section'/>
+                            <label class="w-25" for="">Section</label>
+                            <input class="from-control w-50" type="text" name='section'/>
                         </div>
+                        <div class="mb-3">
+                            <label class="w-25"  for="">Upload Image</label>
+                            <input type="file" name="image" required class="from-control w-50">
+                        </div>
+
+                        <div class="from-group mb-3 float-end">
+                           <button type="submit" class="btn btn-success ">Submit</button>
+                        </div>
+
                     </form>
+
                 </div>
             </div>
 

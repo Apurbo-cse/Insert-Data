@@ -23,26 +23,8 @@
 <body>
 
     <div class="container">
-        <form>
-            <div class="form-group">
-                <label for="exampleInputEmail1">Title</label>
-                <input type="text" class="form-control" placeholder="Enter Title">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Summary</label>
-                <textarea name="" class="form-control" id="" cols="30" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlFile1">Image</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1">
-            </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Active</label>
-            </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        <a href="{{ url('student') }}"><button class="btn btn-success mt-5 ">Student</button></a>
     </div>
 
 </body>

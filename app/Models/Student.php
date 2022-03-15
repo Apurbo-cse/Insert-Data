@@ -14,6 +14,7 @@ class Student extends Model
         'email',
         'course',
         'section',
+        'image',
 
     ];
 
