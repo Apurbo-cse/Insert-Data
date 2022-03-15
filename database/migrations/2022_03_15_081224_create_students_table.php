@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+// use Illuminate\Support\Str;
 
 class CreateStudentsTable extends Migration
 {
@@ -16,6 +17,7 @@ class CreateStudentsTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            // $table->slug = str::slug($table->name,'-');
             $table->string('email');
             $table->string('course');
             $table->string('section');

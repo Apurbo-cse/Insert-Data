@@ -13,7 +13,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return view ('index');
+        $students = Student::latest()->paginate(5);
+        return view ('index',compact('students'))->with('i', (request('page',1)-1)*5);
     }
 
     /**
@@ -45,10 +46,10 @@ class StudentController extends Controller
         if($request->hasfile('image'))
         {
             $file = $request->file('image');
-            $extenstion = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extenstion;
-            $file->move('uploads/students/', $filename);
-            $student->image = $filename;
+            $path ='images/student';
+            $file_name = time() . $file->getClientOriginalName();
+            $file->move($path, $file_name);
+            $student['image']= $path.'/'. $file_name;
         }
 
         $student->save();
@@ -75,7 +76,7 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view ('edit');
     }
 
     /**
@@ -96,8 +97,17 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Student $student)
     {
-        //
+        if($student){
+            if(file_exists(($student->image))){
+                unlink($student->image);
+            }
+
+            $student->delete();
+            session()->flash('success', 'student deleted successfully');
+        }
+
+        return redirect()->route('student');
     }
 }
