@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SlugController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,4 @@ Route::get('/', function () {
 // Route::post('/create', [StudentController::class,'index
 
 Route::resource('student', StudentController::class);
+Route::resource('slug', SlugController::class);

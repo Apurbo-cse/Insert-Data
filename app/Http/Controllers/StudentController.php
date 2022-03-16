@@ -13,11 +13,10 @@ class StudentController extends Controller
      */
     public function index()
     {
-
-
         $students = Student::orderBy('created_at', 'DESC')->paginate(20);
         return view ('index',compact('students'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
