@@ -13,8 +13,10 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::latest()->paginate(5);
-        return view ('index',compact('students'))->with('i', (request('page',1)-1)*5);
+
+
+        $students = Student::orderBy('created_at', 'DESC')->paginate(20);
+        return view ('index',compact('students'));
     }
 
     /**
@@ -36,11 +38,11 @@ class StudentController extends Controller
     public function store(Request $request)
     {
 
-        $student =new Student;
-        $student->name = $request->input('name');
-        $student->email = $request->input('email');
-        $student->course = $request->input('course');
-        $student->section = $request->input('section');
+        $data =new Student;
+        $data->name = $request->input('name');
+        $data->email = $request->input('email');
+        $data->course = $request->input('course');
+        $data->section = $request->input('section');
 
 
         if($request->hasfile('image'))
@@ -49,10 +51,18 @@ class StudentController extends Controller
             $path ='images/student';
             $file_name = time() . $file->getClientOriginalName();
             $file->move($path, $file_name);
-            $student['image']= $path.'/'. $file_name;
+            $data['image']= $path.'/'. $file_name;
         }
 
-        $student->save();
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required',
+            'course'=>'required',
+            'section'=>'required',
+            // 'image' => 'required|image|mimes:jpeg,png,jpg,JPEG,PNG,JPG|max:2048',
+        ]);
+
+        $data->save();
 
         return redirect('student')->with('status', 'Student added successfully');
     }
@@ -74,9 +84,13 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Student $student)
     {
-        return view ('edit');
+        $data['student']=$student;
+        return view('edit', $data);
+
+        // $data = Student::find($id);
+        // return view ('edit', compact('student'));
     }
 
     /**
@@ -86,9 +100,36 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Student $student)
     {
-        //
+        $data =new Student;
+        $data->name = $request->input('name');
+        $data->email = $request->input('email');
+        $data->course = $request->input('course');
+        $data->section = $request->input('section');
+
+
+        if($request->hasfile('image'))
+        {
+            $file = $request->file('image');
+            $path ='images/student';
+            $file_name = time() . $file->getClientOriginalName();
+            $file->move($path, $file_name);
+            $data['image']= $path.'/'. $file_name;
+        }
+
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required',
+            'course'=>'required',
+            'section'=>'required',
+            // 'image' => 'required|image|mimes:jpeg,png,jpg,JPEG,PNG,JPG|max:2048',
+        ]);
+
+            $data->save();
+        session()->flash('success', 'Gallery Update Successfully');
+        return redirect('student')->with('status', 'Student added successfully');
+
     }
 
     /**
@@ -106,8 +147,7 @@ class StudentController extends Controller
 
             $student->delete();
             session()->flash('success', 'student deleted successfully');
+            return back();
         }
-
-        return redirect()->route('student');
     }
 }

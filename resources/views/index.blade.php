@@ -38,7 +38,7 @@
 
                         @foreach ($students as $student)
                         <tr>
-                            <th scope="row">1{{ ++$i }}</th>
+                            <th scope="row">{{$student->id }}</th>
                             <td>{{ $student->name }}</td>
                             <td>{{ $student->email }}</td>
                             <td>{{ $student->course }}</td>

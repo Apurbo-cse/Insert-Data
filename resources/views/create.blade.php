@@ -25,24 +25,39 @@
                         <div class="from-group mb-3">
                             <label class="w-25" for="">Student Name</label>
                             <input class="from-control w-50" type="text" name='name'/>
+                            @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="from-group mb-3">
                             <label class="w-25" for="">Email</label>
                             <input class="from-control w-50" type="email" name='email'/>
+                            @error('email')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="from-group mb-3">
                             <label class="w-25" for="">Course</label>
                             <input class="from-control w-50" type="text" name='course'/>
+                            @error('course')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="from-group mb-3">
                             <label class="w-25" for="">Section</label>
                             <input class="from-control w-50" type="text" name='section'/>
+                            @error('section')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="w-25"  for="">Upload Image</label>
-                            <input type="file" name="image" required class="from-control w-50">
+                            <input type="file" name="image"  class="from-control w-50">
+                            @error('image')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="from-group mb-3 float-end">

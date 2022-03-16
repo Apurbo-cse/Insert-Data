@@ -20,29 +20,51 @@
                 <div class="card-body">
 
                     <form action="{{ route('student.update',$student->id) }}" method="post" enctype="multipart/form-data">
+
                         @csrf
                         @method('put')
+
                         <div class="from-group mb-3">
                             <label class="w-25" for="">Student Name</label>
-                            <input class="from-control w-50" type="text" name='name'/>
+                            <input class="from-control w-50" type="text" name='name' value="{{$student->name}}"/>
+                            @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+
                         <div class="from-group mb-3">
                             <label class="w-25" for="">Email</label>
-                            <input class="from-control w-50" type="email" name='email'/>
+                            <input class="from-control w-50" type="email" name='email'  value="{{$student->email}}"/>
+                            @error('email')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="from-group mb-3">
                             <label class="w-25" for="">Course</label>
-                            <input class="from-control w-50" type="text" name='course'/>
+                            <input class="from-control w-50" type="text" name='course' value="{{$student->course}}"/>
+                            @error('course')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="from-group mb-3">
                             <label class="w-25" for="">Section</label>
-                            <input class="from-control w-50" type="text" name='section'/>
+                            <input class="from-control w-50" type="text" name='section' value="{{$student->section}}"/>
+                            @error('section')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+
                         <div class="mb-3">
                             <label class="w-25"  for="">Upload Image</label>
-                            <input type="file" name="image" required class="from-control w-50">
+                            <input type="file" name="image"  class="from-control w-50">
+                            @error('image')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                            @if($student->image != null)
+                                <img src="{{ asset($student->image) }}" width="20%">
+                            @endif
                         </div>
 
                         <div class="from-group mb-3 float-end">
