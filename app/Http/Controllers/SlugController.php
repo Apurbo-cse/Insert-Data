@@ -85,7 +85,9 @@ class SlugController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $slug = Slug::findOrFail($id);
+        return view('Slug.edit', compact('slug'));
     }
 
     /**
@@ -95,9 +97,26 @@ class SlugController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+
+    public function update(Request $request,$id)
     {
-        //
+        $slug = Slug::findOrFail($id);
+        $slug->title = $request->input('title');
+        $slug->slug = Str::slug($request->title, '-');
+        $slug->summary = $request->input('summary');
+
+        if($request->hasfile('image'))
+        {
+            $file = $request->file('image');
+            $path ='images/student';
+            $file_name = time() . $file->getClientOriginalName();
+            $file->move($path, $file_name);
+            $slug['image']= $path.'/'. $file_name;
+        }
+
+        $slug->update();
+
+        return redirect('slug')->with('status', 'Student added successfully');
     }
 
     /**
@@ -108,6 +127,16 @@ class SlugController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $slug = Slug::findOrFail($id);
+        
+        if($slug){
+            if(file_exists(($slug->image))){
+                unlink($slug->image);
+            }
+
+            $slug->delete();
+            session()->flash('success', 'student deleted successfully');
+            return back();
+        }
     }
 }
